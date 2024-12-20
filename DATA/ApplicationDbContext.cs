@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WEBBERBERODEV.Models;
 
 namespace WEBBERBERODEV.DATA
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -12,6 +13,8 @@ namespace WEBBERBERODEV.DATA
         public DbSet<Calisan> Calisanlar { get; set; }
         public DbSet<CalisanHizmet> CalisanHizmetler { get; set; }
         public DbSet<Randevu> Randevular { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

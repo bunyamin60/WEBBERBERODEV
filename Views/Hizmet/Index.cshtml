@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WEBBERBERODEV.Models.Hizmet>
+
+@{
+    ViewData["Title"] = "Hizmet Listesi";
+}
+
+<h1>Hizmet Listesi</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Yeni Hizmet Ekle</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Süre (Dakika)</th>
+            <th>Fiyat</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Ad</td>
+                <td>@item.SureDakika</td>
+                <td>@item.Fiyat</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

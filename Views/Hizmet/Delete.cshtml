@@ -1,0 +1,24 @@
+﻿@model WEBBERBERODEV.Models.Hizmet
+
+@{
+    ViewData["Title"] = "Hizmet Sil";
+}
+
+<h1>Hizmet Sil</h1>
+
+<p>Bu hizmeti silmek istediğinize emin misiniz?</p>
+
+<div class="mb-3">
+    <strong>Ad:</strong> @Model.Ad
+</div>
+<div class="mb-3">
+    <strong>Süre (Dakika):</strong> @Model.SureDakika
+</div>
+<div class="mb-3">
+    <strong>Fiyat:</strong> @Model.Fiyat
+</div>
+
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a class="btn btn-secondary" asp-action="Index">Vazgeç</a>
+</form>
