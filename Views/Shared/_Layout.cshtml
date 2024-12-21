@@ -1,4 +1,4 @@
-﻿@using WEBBERBERODEV.DATA;
+@using WEBBERBERODEV.DATA;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,20 +23,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-
-                        @if (User.IsInRole(UserRoles.Role_Admin))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        }
-                        <!-- Yalnızca Admin ise Hizmet menüsü -->
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Hizmet" asp-action="Index">Hizmet Yönetimi</a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
                     </ul>
 
                     <partial name="_LoginPartial" />
