@@ -1,0 +1,27 @@
+﻿@model WEBBERBERODEV.Models.Calisan
+
+@{
+    ViewData["Title"] = "Çalışan Detayı";
+}
+
+<h1>Çalışan Detayı</h1>
+
+<div class="mb-3">
+    <strong>Ad:</strong> @Model.Ad
+</div>
+<div class="mb-3">
+    <strong>Soyad:</strong> @Model.Soyad
+</div>
+<div class="mb-3">
+    <strong>Uzmanlık:</strong> @Model.Uzmanlik
+</div>
+<div class="mb-3">
+    <strong>Aktif Mi:</strong> @(Model.AktifMi ? "Evet" : "Hayır")
+</div>
+<div class="mb-3">
+    <strong>Salon:</strong> @Model.Salon.Ad
+</div>
+
+<p>
+    <a class="btn btn-secondary" asp-action="Index">Geri</a>
+</p>

@@ -1,0 +1,42 @@
+﻿@model WEBBERBERODEV.Models.Calisan
+
+@{
+    ViewData["Title"] = "Çalışan Düzenle";
+}
+
+<h1>Çalışan Düzenle</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="SalonId" value="1" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Ad" class="form-label"></label>
+        <input asp-for="Ad" class="form-control" />
+        <span asp-validation-for="Ad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Soyad" class="form-label"></label>
+        <input asp-for="Soyad" class="form-control" />
+        <span asp-validation-for="Soyad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Uzmanlik" class="form-label"></label>
+        <input asp-for="Uzmanlik" class="form-control" />
+        <span asp-validation-for="Uzmanlik" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="AktifMi" class="form-check-input" />
+        <label asp-for="AktifMi" class="form-check-label"></label>
+        <span asp-validation-for="AktifMi" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a class="btn btn-secondary" asp-action="Index">Geri</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

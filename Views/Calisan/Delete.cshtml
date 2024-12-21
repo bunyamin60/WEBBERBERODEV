@@ -1,0 +1,30 @@
+﻿@model WEBBERBERODEV.Models.Calisan
+
+@{
+    ViewData["Title"] = "Çalışan Sil";
+}
+
+<h1>Çalışan Sil</h1>
+
+<p>Bu çalışanı silmek istediğinize emin misiniz?</p>
+
+<div class="mb-3">
+    <strong>Ad:</strong> @Model.Ad
+</div>
+<div class="mb-3">
+    <strong>Soyad:</strong> @Model.Soyad
+</div>
+<div class="mb-3">
+    <strong>Uzmanlık:</strong> @Model.Uzmanlik
+</div>
+<div class="mb-3">
+    <strong>Aktif Mi:</strong> @(Model.AktifMi ? "Evet" : "Hayır")
+</div>
+<div class="mb-3">
+    <strong>Salon:</strong> @Model.Salon.Ad
+</div>
+
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a class="btn btn-secondary" asp-action="Index">Vazgeç</a>
+</form>

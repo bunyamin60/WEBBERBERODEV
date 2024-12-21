@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WEBBERBERODEV.Models.Calisan>
+
+@{
+    ViewData["Title"] = "Çalışan Listesi";
+}
+
+<h1>Çalışan Listesi</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Yeni Çalışan Ekle</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Uzmanlık</th>
+            <th>Aktif Mi</th>
+            <th>Salon</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Ad</td>
+                <td>@item.Soyad</td>
+                <td>@item.Uzmanlik</td>
+                <td>@(item.AktifMi ? "Evet" : "Hayır")</td>
+                <td>@item.Salon.Ad</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
