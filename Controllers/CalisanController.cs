@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WEBBERBERODEV.DATA;
@@ -19,7 +19,7 @@ namespace WEBBERBERODEV.Controllers
         // GET: Calisan
         public async Task<IActionResult> Index()
         {
-            var calisanlar = _context.Calisanlar.Include(c => c.Salon);
+            var calisanlar = _context.Calisanlar;
             return View(await calisanlar.ToListAsync());
         }
 
@@ -32,7 +32,6 @@ namespace WEBBERBERODEV.Controllers
             }
 
             var calisan = await _context.Calisanlar
-                .Include(c => c.Salon)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (calisan == null)
             {
@@ -45,7 +44,6 @@ namespace WEBBERBERODEV.Controllers
         // GET: Calisan/Create
         public IActionResult Create()
         {
-            // Salon seçimine gerek yok, çünkü sadece bir salon var
             return View();
         }
 
@@ -54,10 +52,8 @@ namespace WEBBERBERODEV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Ad,Soyad,Uzmanlik,AktifMi")] Calisan calisan)
         {
-            calisan.SalonId = 1; // Otomatik olarak SalonId'yi 1 olarak ayarla
             if (ModelState.IsValid)
             {
-                
                 _context.Add(calisan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -95,7 +91,6 @@ namespace WEBBERBERODEV.Controllers
             {
                 try
                 {
-                    calisan.SalonId = 1; // Otomatik olarak SalonId'yi 1 olarak ayarla
                     _context.Update(calisan);
                     await _context.SaveChangesAsync();
                 }
@@ -124,7 +119,6 @@ namespace WEBBERBERODEV.Controllers
             }
 
             var calisan = await _context.Calisanlar
-                .Include(c => c.Salon)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (calisan == null)
             {
