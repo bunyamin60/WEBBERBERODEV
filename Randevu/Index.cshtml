@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WEBBERBERODEV.Models.Randevu>
+@using Microsoft.AspNetCore.Identity
+@using WEBBERBERODEV.DATA
+@using WEBBERBERODEV.Models
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Randevularım";
+}
+
+<h1>Randevularım</h1>
+
+@if (User.IsInRole(UserRoles.Role_Musteri))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Yeni Randevu Al</a>
+    </p>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @if (User.IsInRole(UserRoles.Role_Calisan) || User.IsInRole(UserRoles.Role_Admin))
+            {
+                <th>Müşteri</th>
+            }
+            <th>Hizmetler</th>
+            <th>Çalışan</th>
+            <th>Randevu Tarihi</th>
+            <th>Fiyat</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (User.IsInRole(UserRoles.Role_Calisan) || User.IsInRole(UserRoles.Role_Admin))
+                {
+                    <td>@item.Kullanici.Ad @item.Kullanici.Soyad</td>
+                }
+                <td>
+                    @foreach (var hizmet in item.RandevuHizmetler)
+                    {
+                        @hizmet.Hizmet.Ad @if (hizmet != item.RandevuHizmetler.Last())
+                        {
+                            <span>, </span>
+                        }
+                    }
+                </td>
+                <td>@item.Calisan.Ad @item.Calisan.Soyad</td>
+                <td>@item.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.Fiyat.ToString("C")</td>
+                <td>@item.Durum</td>
+                <td>
+                    @if (User.IsInRole(UserRoles.Role_Musteri))
+                    {
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                        @if (item.Durum == RandevuDurumu.Beklemede)
+                        {
+                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                        }
+                    }
+                    else if (User.IsInRole(UserRoles.Role_Calisan) || User.IsInRole(UserRoles.Role_Admin))
+                    {
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                        @if (item.Durum == RandevuDurumu.Beklemede)
+                        {
+                            <form asp-action="OnaylaRandevu" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Randevuyu onaylamak istediğinize emin misiniz?');">Onayla</button>
+                            </form>
+                            <form asp-action="IptalEtRandevu" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Randevuyu iptal etmek istediğinize emin misiniz?');">İptal Et</button>
+                            </form>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
