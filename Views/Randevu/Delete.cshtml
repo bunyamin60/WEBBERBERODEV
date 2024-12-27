@@ -1,0 +1,48 @@
+﻿@model WEBBERBERODEV.Models.Randevu
+
+@{
+    ViewData["Title"] = "Randevu Sil";
+}
+
+<h1>Randevu Sil</h1>
+
+<div class="alert alert-warning" role="alert">
+    Bu randevuyu silmek istediğinize emin misiniz?
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Hizmetler</th>
+        <td>
+            @foreach (var hizmet in Model.RandevuHizmetler)
+            {
+                @hizmet.Hizmet.Ad @if (hizmet != Model.RandevuHizmetler.Last())
+                {
+                    <span>, </span>
+                }
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Çalışan</th>
+        <td>@Model.Calisan.Ad @Model.Calisan.Soyad</td>
+    </tr>
+    <tr>
+        <th>Randevu Tarihi</th>
+        <td>@Model.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+    </tr>
+    <tr>
+        <th>Fiyat</th>
+        <td>@Model.Fiyat.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Durum</th>
+        <td>@Model.Durum</td>
+    </tr>
+</table>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

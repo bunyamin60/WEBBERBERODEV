@@ -1,0 +1,49 @@
+﻿@model WEBBERBERODEV.Models.Randevu
+
+@{
+    ViewData["Title"] = "Randevu Detayları";
+}
+
+<h1>Randevu Detayları</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Hizmetler</th>
+        <td>
+            @foreach (var hizmet in Model.RandevuHizmetler)
+            {
+                @hizmet.Hizmet.Ad @if (hizmet != Model.RandevuHizmetler.Last())
+                {
+                    <span>, </span>
+                }
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Çalışan</th>
+        <td>@Model.Calisan.Ad @Model.Calisan.Soyad</td>
+    </tr>
+    <tr>
+        <th>Randevu Tarihi</th>
+        <td>@Model.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+    </tr>
+    <tr>
+        <th>Fiyat</th>
+        <td>@Model.Fiyat.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Durum</th>
+        <td>@Model.Durum</td>
+    </tr>
+    @if (Model.Kullanici != null)
+    {
+        <tr>
+            <th>Müşteri</th>
+            <td>@Model.Kullanici.Ad @Model.Kullanici.Soyad</td>
+        </tr>
+    }
+</table>
+
+<p>
+    <a class="btn btn-secondary" asp-action="Index">Geri Dön</a>
+</p>
