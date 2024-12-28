@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace WEBBERBERODEV.Models
 {
@@ -24,5 +24,7 @@ namespace WEBBERBERODEV.Models
         public string Uzmanlik { get; set; }
 
         public bool AktifMi { get; set; }
+
+
     }
 }
