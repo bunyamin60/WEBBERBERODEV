@@ -1,0 +1,45 @@
+﻿@model WEBBERBERODEV.Models.CalisanCalismaSaatleri
+
+@{
+    ViewData["Title"] = "Çalışma Saati Düzenle";
+}
+
+<h1>Çalışma Saati Düzenle</h1>
+
+<form asp-action="EditCalismaSaati" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CalisanId" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Gun" class="form-label">Gün</label>
+        <select asp-for="Gun" class="form-control">
+            <option value="">-- Seçiniz --</option>
+            @foreach (DayOfWeek gun in Enum.GetValues(typeof(DayOfWeek)))
+            {
+                <option value="@gun" selected="@(gun == Model.Gun)">@gun</option>
+            }
+        </select>
+        <span asp-validation-for="Gun" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BaslangicSaati" class="form-label">Başlangıç Saati</label>
+        <input asp-for="BaslangicSaati" class="form-control" type="time" />
+        <span asp-validation-for="BaslangicSaati" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BitisSaati" class="form-label">Bitiş Saati</label>
+        <input asp-for="BitisSaati" class="form-control" type="time" />
+        <span asp-validation-for="BitisSaati" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a class="btn btn-secondary" asp-action="CalismaSaatleri" asp-route-id="@Model.CalisanId">Geri</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

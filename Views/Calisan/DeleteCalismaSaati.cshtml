@@ -1,0 +1,28 @@
+﻿@model WEBBERBERODEV.Models.CalisanCalismaSaatleri
+
+@{
+    ViewData["Title"] = "Çalışma Saati Sil";
+}
+
+<h1>Çalışma Saati Sil</h1>
+
+<h3>Bu çalışma saatini silmek istediğinize emin misiniz?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Çalışan</dt>
+        <dd class="col-sm-10">@Model.Calisan.AdSoyad</dd>
+        <dt class="col-sm-2">Gün</dt>
+        <dd class="col-sm-10">@Model.Gun</dd>
+        <dt class="col-sm-2">Başlangıç Saati</dt>
+        <dd class="col-sm-10">@Model.BaslangicSaati.ToString(@"hh\:mm")</dd>
+        <dt class="col-sm-2">Bitiş Saati</dt>
+        <dd class="col-sm-10">@Model.BitisSaati.ToString(@"hh\:mm")</dd>
+    </dl>
+
+    <form asp-action="DeleteCalismaSaatiConfirmed" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Sil</button>
+        <a class="btn btn-secondary" asp-action="CalismaSaatleri" asp-route-id="@Model.CalisanId">Geri</a>
+    </form>
+</div>
