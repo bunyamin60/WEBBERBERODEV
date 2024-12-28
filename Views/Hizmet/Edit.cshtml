@@ -1,4 +1,4 @@
-﻿@model WEBBERBERODEV.Models.Hizmet
+@model WEBBERBERODEV.Models.Hizmet
 
 @{
     ViewData["Title"] = "Hizmet Düzenle";
@@ -7,13 +7,17 @@
 <h1>Hizmet Düzenle</h1>
 
 <form method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
     <div class="mb-3">
         <label asp-for="Ad" class="form-label"></label>
         <input asp-for="Ad" class="form-control" />
         <span asp-validation-for="Ad" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="SureDakika" class="form-label"></label>
+        <label asp-for="SureDakika" class="form-label">Sure (Dakika)</label>
         <input asp-for="SureDakika" class="form-control" />
         <span asp-validation-for="SureDakika" class="text-danger"></span>
     </div>
