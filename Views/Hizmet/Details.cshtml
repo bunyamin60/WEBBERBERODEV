@@ -1,19 +1,36 @@
-﻿@model WEBBERBERODEV.Models.Hizmet
+@model WEBBERBERODEV.Models.Hizmet
 
 @{
-    ViewData["Title"] = "Hizmet Detayı";
+    ViewData["Title"] = "Hizmet Detayları";
 }
 
-<h1>Hizmet Detayı</h1>
+<h1>Hizmet Detayları</h1>
 
-<div class="mb-3">
-    <strong>Ad:</strong> @Model.Ad
+<div>
+    <h4>Hizmet</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ad
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Ad
+        </dd>
+        <dt class="col-sm-2">
+            Sure (Dakika)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.SureDakika
+        </dd>
+        <dt class="col-sm-2">
+            Fiyat
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Fiyat.ToString("C")
+        </dd>
+    </dl>
 </div>
-<div class="mb-3">
-    <strong>Süre (Dakika):</strong> @Model.SureDakika
+<div>
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Düzenle</a> |
+    <a class="btn btn-secondary" asp-action="Index">Geri</a>
 </div>
-<div class="mb-3">
-    <strong>Fiyat:</strong> @Model.Fiyat
-</div>
-
-<a class="btn btn-secondary" asp-action="Index">Geri</a>
