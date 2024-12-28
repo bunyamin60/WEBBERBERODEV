@@ -1,0 +1,30 @@
+﻿@model WEBBERBERODEV.Models.CalisanHizmet
+
+@{
+    ViewData["Title"] = "Yeni Hizmet Ata";
+}
+
+<h1>Yeni Hizmet Ata</h1>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="CalisanId" class="form-label">Çalışan</label>
+        <select asp-for="CalisanId" class="form-control" asp-items="ViewBag.CalisanId"></select>
+        <span asp-validation-for="CalisanId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HizmetId" class="form-label">Hizmet</label>
+        <select asp-for="HizmetId" class="form-control" asp-items="ViewBag.HizmetId"></select>
+        <span asp-validation-for="HizmetId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ata</button>
+    <a class="btn btn-secondary" asp-action="Index">Geri</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
