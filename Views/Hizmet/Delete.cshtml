@@ -1,4 +1,4 @@
-﻿@model WEBBERBERODEV.Models.Hizmet
+@model WEBBERBERODEV.Models.Hizmet
 
 @{
     ViewData["Title"] = "Hizmet Sil";
@@ -6,19 +6,34 @@
 
 <h1>Hizmet Sil</h1>
 
-<p>Bu hizmeti silmek istediğinize emin misiniz?</p>
+<h3>Bu hizmeti silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>Hizmet</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ad
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Ad
+        </dd>
+        <dt class="col-sm-2">
+            Sure (Dakika)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.SureDakika
+        </dd>
+        <dt class="col-sm-2">
+            Fiyat
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Fiyat.ToString("C")
+        </dd>
+    </dl>
 
-<div class="mb-3">
-    <strong>Ad:</strong> @Model.Ad
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Sil</button> |
+        <a class="btn btn-secondary" asp-action="Index">Geri</a>
+    </form>
 </div>
-<div class="mb-3">
-    <strong>Süre (Dakika):</strong> @Model.SureDakika
-</div>
-<div class="mb-3">
-    <strong>Fiyat:</strong> @Model.Fiyat
-</div>
-
-<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a class="btn btn-secondary" asp-action="Index">Vazgeç</a>
-</form>
