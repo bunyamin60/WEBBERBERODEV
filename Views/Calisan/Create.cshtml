@@ -1,35 +1,51 @@
-﻿@model WEBBERBERODEV.Models.Calisan
+@model WEBBERBERODEV.Models.CalisanCreateViewModel
 
 @{
-    ViewData["Title"] = "Yeni Çalışan Ekle";
+    ViewData["Title"] = "Yeni Çalışan Oluştur";
 }
 
-<h1>Yeni Çalışan Ekle</h1>
+<h1>Yeni Çalışan Oluştur</h1>
 
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <!-- Gizli SalonId Alanı -->
-    <input type="hidden" asp-for="SalonId" value="1" />
+    <!-- Identity user bilgileri -->
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
 
     <div class="mb-3">
-        <label asp-for="Ad" class="form-label"></label>
+        <label asp-for="Password" class="form-label">Şifre</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <!-- Calisan alanları -->
+    <div class="mb-3">
+        <label asp-for="Ad" class="form-label">Ad</label>
         <input asp-for="Ad" class="form-control" />
         <span asp-validation-for="Ad" class="text-danger"></span>
     </div>
+
     <div class="mb-3">
-        <label asp-for="Soyad" class="form-label"></label>
+        <label asp-for="Soyad" class="form-label">Soyad</label>
         <input asp-for="Soyad" class="form-control" />
         <span asp-validation-for="Soyad" class="text-danger"></span>
     </div>
+
     <div class="mb-3">
-        <label asp-for="Uzmanlik" class="form-label"></label>
+        <label asp-for="Uzmanlik" class="form-label">Uzmanlık</label>
         <input asp-for="Uzmanlik" class="form-control" />
         <span asp-validation-for="Uzmanlik" class="text-danger"></span>
     </div>
+
     <div class="mb-3 form-check">
         <input asp-for="AktifMi" class="form-check-input" />
-        <label asp-for="AktifMi" class="form-check-label"></label>
+        <label asp-for="AktifMi" class="form-check-label">Aktif Mi?</label>
         <span asp-validation-for="AktifMi" class="text-danger"></span>
     </div>
 
