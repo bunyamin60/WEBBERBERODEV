@@ -1,8 +1,101 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model WEBBERBERODEV.Models.HomePageViewModel
+
+@{
+    ViewData["Title"] = "Anasayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <!-- Salon Bilgisi -->
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h1>@Model.SalonAdi</h1>
+            <p>Açılış-Kapanış Saatleri: @Model.AcilisKapanisSaati</p>
+        </div>
+    </div>
+
+    <!-- Hizmetler -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Hizmetlerimiz</h2>
+            <div class="row">
+                @foreach (var hizmet in Model.Hizmetler)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">@hizmet.Ad</h5>
+                                <p class="card-text">
+                                    Süre: @hizmet.SureDakika dk<br />
+                                    Fiyat: @hizmet.Fiyat.ToString("C")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Index", "Randevu")" class="btn btn-primary btn-lg mt-3">
+                    <i class="fas fa-calendar-alt"></i> Randevu Al
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Page("/Areas/Pages/Identity/Account/Register", new { ReturnUrl = Url.Action("Index", "Randevu") })" class="btn btn-primary btn-lg mt-3">
+                    <i class="fas fa-calendar-alt"></i> Randevu Al
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- Çalışanlar -->
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <h2>Çalışanlarımız</h2>
+            <div class="row">
+                @foreach (var calisan in Model.Calisanlar)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a href="@Url.Action("Details", "Calisan", new { id = calisan.Id })" class="text-decoration-none">
+                                            @calisan.AdSoyad
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Page("/Areas/Pages/Identitiy/Account/Login", new { ReturnUrl = Url.Action("Details", "Calisan", new { id = calisan.Id }) })" class="text-decoration-none">
+                                            @calisan.AdSoyad
+                                        </a>
+                                    }
+                                </h5>
+                                <p class="card-text">
+                                    Uzmanlık: @calisan.Uzmanlik<br />
+                                    @calisan.ApplicationUser.Email
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Salon Adresi -->
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <h3>Adresimiz</h3>
+            <p>
+                <strong>BÜN BERBER</strong><br />
+                Adres: İstanbul, Türkiye<br />
+                Telefon: +90 123 456 78 90<br />
+                E-posta: info@bunberber.com
+            </p>
+            <!-- Google Maps İframe (Opsiyonel) -->
+
+        </div>
+    </div>
 </div>
