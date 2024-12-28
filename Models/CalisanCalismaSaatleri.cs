@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WEBBERBERODEV.Models
@@ -9,7 +9,7 @@ namespace WEBBERBERODEV.Models
 
         [Required]
         public int CalisanId { get; set; }
-        public Calisan Calisan { get; set; }
+        public Calisan? Calisan { get; set; }
 
         [Required]
         public DayOfWeek Gun { get; set; }
