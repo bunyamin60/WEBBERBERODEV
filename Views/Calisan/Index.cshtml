@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEBBERBERODEV.Models.Calisan>
+@model IEnumerable<WEBBERBERODEV.Models.Calisan>
 
 @{
     ViewData["Title"] = "Çalışan Listesi";
@@ -17,7 +17,6 @@
             <th>Soyad</th>
             <th>Uzmanlık</th>
             <th>Aktif Mi</th>
-            <th>Salon</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -29,11 +28,19 @@
                 <td>@item.Soyad</td>
                 <td>@item.Uzmanlik</td>
                 <td>@(item.AktifMi ? "Evet" : "Hayır")</td>
-                <td>@item.Salon.Ad</td>
                 <td>
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                    <a class="btn btn-info"
+                       asp-action="Details"
+                       asp-route-id="@item.Id">Detay</a>
+                    <a class="btn btn-warning"
+                       asp-action="Edit"
+                       asp-route-id="@item.Id">Düzenle</a>
+                    <a class="btn btn-danger"
+                       asp-action="Delete"
+                       asp-route-id="@item.Id">Sil</a>
+                    <a class="btn btn-secondary"
+                       asp-action="CalismaSaatleri"
+                       asp-route-id="@item.Id">Çalışma Saatleri</a>
                 </td>
             </tr>
         }
