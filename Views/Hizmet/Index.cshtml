@@ -1,10 +1,10 @@
-﻿@model IEnumerable<WEBBERBERODEV.Models.Hizmet>
+@model IEnumerable<WEBBERBERODEV.Models.Hizmet>
 
 @{
-    ViewData["Title"] = "Hizmet Listesi";
+    ViewData["Title"] = "Hizmetler";
 }
 
-<h1>Hizmet Listesi</h1>
+<h1>Hizmetler</h1>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Yeni Hizmet Ekle</a>
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>Ad</th>
-            <th>Süre (Dakika)</th>
+            <th>Sure (Dakika)</th>
             <th>Fiyat</th>
             <th>İşlemler</th>
         </tr>
@@ -25,7 +25,7 @@
             <tr>
                 <td>@item.Ad</td>
                 <td>@item.SureDakika</td>
-                <td>@item.Fiyat</td>
+                <td>@item.Fiyat.ToString("C")</td> <!-- Currency formatında görüntüleme -->
                 <td>
                     <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
