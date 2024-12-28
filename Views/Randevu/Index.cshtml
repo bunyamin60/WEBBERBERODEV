@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEBBERBERODEV.Models.Randevu>
+@model IEnumerable<WEBBERBERODEV.Models.Randevu>
 @using Microsoft.AspNetCore.Identity
 @using WEBBERBERODEV.DATA
 @using WEBBERBERODEV.Models
@@ -14,7 +14,7 @@
 @if (User.IsInRole(UserRoles.Role_Musteri))
 {
     <p>
-        <a class="btn btn-primary" asp-action="Create">Yeni Randevu Al</a>
+        <a class="btn btn-primary" asp-controller="Randevu" asp-action="Create">Yeni Randevu Al</a>
     </p>
 }
 
@@ -44,7 +44,11 @@
                 <td>
                     @foreach (var hizmet in item.RandevuHizmetler)
                     {
-                        @hizmet.Hizmet.Ad @if (hizmet != item.RandevuHizmetler.Last())
+                        <span>
+                            @hizmet.Hizmet.Ad
+                            (@hizmet.Hizmet.SureDakika dk, @hizmet.Hizmet.Fiyat.ToString("C"))
+                        </span>
+                        @if (hizmet != item.RandevuHizmetler.Last())
                         {
                             <span>, </span>
                         }
@@ -69,11 +73,18 @@
                         <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detay</a>
                         @if (item.Durum == RandevuDurumu.Beklemede)
                         {
-                            <form asp-action="OnaylaRandevu" method="post" style="display:inline;">
+                            <form asp-action="Onayla" method="post" style="display:inline;">
                                 <input type="hidden" name="id" value="@item.Id" />
                                 <button type="submit" class="btn btn-success" onclick="return confirm('Randevuyu onaylamak istediğinize emin misiniz?');">Onayla</button>
                             </form>
-                            <form asp-action="IptalEtRandevu" method="post" style="display:inline;">
+                            <form asp-action="IptalEt" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Randevuyu iptal etmek istediğinize emin misiniz?');">İptal Et</button>
+                            </form>
+                        }
+                          @if (item.Durum == RandevuDurumu.Beklemede || item.Durum == RandevuDurumu.Onaylandi)
+                        {
+                            <form asp-action="IptalEt" method="post" style="display:inline;">
                                 <input type="hidden" name="id" value="@item.Id" />
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Randevuyu iptal etmek istediğinize emin misiniz?');">İptal Et</button>
                             </form>
