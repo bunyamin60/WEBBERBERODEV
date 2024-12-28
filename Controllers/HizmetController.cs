@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WEBBERBERODEV.DATA;
 using WEBBERBERODEV.Models;
 
 namespace WEBBERBERODEV.Controllers
 {
-    [Authorize(Roles = "Admin")] // Sadece Admin rolündeki kullanıcılar erişebilecek
+    [Authorize(Roles = UserRoles.Role_Admin)] // Sadece Admin rolündeki kullanıcılar erişebilecek
     public class HizmetController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,100 +16,135 @@ namespace WEBBERBERODEV.Controllers
             _context = context; // DbContext enjekte ediliyor
         }
 
-        public IActionResult Index()
+        // GET: Hizmet
+        public async Task<IActionResult> Index()
         {
-            var hizmetler = _context.Hizmetler.ToList();
+            var hizmetler = await _context.Hizmetler.ToListAsync();
             return View(hizmetler); // Hizmet listesini View'e gönder
         }
 
-        public IActionResult Details(int id)
+        // GET: Hizmet/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            var hizmet = _context.Hizmetler.FirstOrDefault(h => h.Id == id);
-            if (hizmet == null)
+            if (id == null)
+            {
                 return NotFound();
+            }
+
+            var hizmet = await _context.Hizmetler
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (hizmet == null)
+            {
+                return NotFound();
+            }
 
             return View(hizmet);
         }
 
+        // GET: Hizmet/Create
         public IActionResult Create()
         {
             return View(); // Boş form
         }
 
+        // POST: Hizmet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Hizmet hizmet)
-        {
-            if (!ModelState.IsValid)
-            {
-                foreach (var key in ModelState.Keys)
-                {
-                    foreach (var error in ModelState[key].Errors)
-                    {
-                        Console.WriteLine($"Validation Error: {key} - {error.ErrorMessage}");
-                    }
-                }
-                return View(hizmet);
-            }
-
-            try
-            {
-                hizmet.SalonId = 1; // Varsayılan SalonId
-                _context.Hizmetler.Add(hizmet);
-                _context.SaveChanges();
-
-                // Başarılı kayıt sonrası listeleme sayfasına yönlendir
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Database Error: {ex.Message}");
-                return View(hizmet);
-            }
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var hizmet = _context.Hizmetler.FirstOrDefault(h => h.Id == id);
-            if (hizmet == null)
-                return NotFound();
-
-            return View(hizmet);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Hizmet hizmet)
+        public async Task<IActionResult> Create([Bind("Id,Ad,SureDakika,Fiyat")] Hizmet hizmet)
         {
             if (ModelState.IsValid)
             {
-                _context.Hizmetler.Update(hizmet);
-                _context.SaveChanges();
+                _context.Hizmetler.Add(hizmet);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(hizmet);
         }
 
-        public IActionResult Delete(int id)
+        // GET: Hizmet/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            var hizmet = _context.Hizmetler.FirstOrDefault(h => h.Id == id);
-            if (hizmet == null)
+            if (id == null)
+            {
                 return NotFound();
+            }
+
+            var hizmet = await _context.Hizmetler.FindAsync(id);
+            if (hizmet == null)
+            {
+                return NotFound();
+            }
+            return View(hizmet);
+        }
+
+        // POST: Hizmet/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Ad,SureDakika,Fiyat")] Hizmet hizmet)
+        {
+            if (id != hizmet.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(hizmet);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!HizmetExists(hizmet.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(hizmet);
+        }
+
+        // GET: Hizmet/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hizmet = await _context.Hizmetler
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (hizmet == null)
+            {
+                return NotFound();
+            }
 
             return View(hizmet);
         }
 
+        // POST: Hizmet/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hizmet = _context.Hizmetler.FirstOrDefault(h => h.Id == id);
+            var hizmet = await _context.Hizmetler.FindAsync(id);
             if (hizmet == null)
                 return NotFound();
 
             _context.Hizmetler.Remove(hizmet);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool HizmetExists(int id)
+        {
+            return _context.Hizmetler.Any(e => e.Id == id);
         }
     }
 }
