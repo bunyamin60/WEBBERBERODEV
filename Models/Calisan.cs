@@ -17,7 +17,7 @@ namespace WEBBERBERODEV.Models
 
         // Çalışan Identity tablosundaki hangi kullanıcıya karşılık geliyor?
         public string? ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
 
         [NotMapped]
         public string AdSoyad => $"{Ad} {Soyad}";
