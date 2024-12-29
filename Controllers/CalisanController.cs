@@ -104,7 +104,10 @@ namespace WEBBERBERODEV.Controllers
         [Authorize(Roles = UserRoles.Role_Admin)]
         public async Task<IActionResult> Edit(int id)
         {
-            var calisan = await _context.Calisanlar.FindAsync(id);
+            var calisan = await _context.Calisanlar
+        .AsNoTracking() // Bu satır izlemeyi devre dışı bırakır
+        .Include(c => c.ApplicationUser)
+        .FirstOrDefaultAsync(c => c.Id == id);
             if (calisan == null)
             {
                 return NotFound();
@@ -130,9 +133,24 @@ namespace WEBBERBERODEV.Controllers
 
             try
             {
+                var mevcutCalisan = await _context.Calisanlar
+            .Include(c => c.ApplicationUser)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+                if (mevcutCalisan == null)
+                {
+                    return NotFound();
+                }
+
+                mevcutCalisan.Ad = calisan.Ad;
+                mevcutCalisan.Soyad = calisan.Soyad;
+                mevcutCalisan.Uzmanlik = calisan.Uzmanlik;
+                mevcutCalisan.AktifMi = calisan.AktifMi;
+                mevcutCalisan.ApplicationUserId = calisan.ApplicationUserId;
                 // Dikkat: Identity tarafındaki (Email, Password) güncellemiyoruz.
                 // Sadece Calisan tablosundaki Ad, Soyad, Uzmanlık vb. güncellenir.
-                _context.Update(calisan);
+                _context.Entry(mevcutCalisan).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
